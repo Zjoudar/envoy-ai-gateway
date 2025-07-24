@@ -1,0 +1,35 @@
+@deepseek_api_key = your_deepseek_api_key_here
+@jwt_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtY3AtZ2F0ZXdheSIsImF1ZCI6Im1jcC1zZXJ2aWNlIn0.SAMPLE_TOKEN
+
+### Test DeepSeek Egress
+POST http://localhost:8443/deepseek/v1/chat/completions
+Authorization: Bearer {{deepseek_api_key}}
+Content-Type: application/json
+
+{
+  "model": "deepseek-chat",
+  "messages": [
+    {"role": "user", "content": "Explain quantum computing"}
+  ]
+}
+
+### Test Internal MCP Ingress
+POST http://localhost:8080/mcp/predict
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "model": "llama-2",
+  "input": "Hello world"
+}
+
+### Test External MCP
+GET http://localhost:8443/external-mcp/v1/models
+X-API-Key: test_api_key
+
+### Test Rate Limiting
+# @name rate_test
+GET http://localhost:8080/mcp/rate-test
+
+### Check Envoy Stats
+GET http://localhost:9901/stats
