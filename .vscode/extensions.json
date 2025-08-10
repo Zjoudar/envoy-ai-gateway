@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "editorconfig.editorconfig",
+    "redhat.vscode-yaml",
+    "ms-azuretools.vscode-docker",
+    "gitlab.gitlab-workflow"
+  ]
+}
