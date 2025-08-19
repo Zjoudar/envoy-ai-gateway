@@ -1,9 +1,0 @@
-{
-  "yaml.schemas": {
-    "kubernetes": "k8s/*.yaml",
-    "envoy.yaml": "k8s/envoy-config.yaml"
-  },
-  "files.associations": {
-    "*.yaml": "yaml"
-  }
-}
