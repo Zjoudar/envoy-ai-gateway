@@ -1,9 +1,0 @@
-- match: { prefix: "/deepseek" }
-  route:
-    cluster: deepseek_llm
-    prefix_rewrite: "/v1/"
-    timeout: 60s
-    headers:
-    - name: Authorization
-      header_match_specifier: exact_match
-      value: "Bearer ${DEEPSEEK_API_KEY}"

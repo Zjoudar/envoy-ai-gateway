@@ -1,7 +1,0 @@
-env:
-- name: DEEPSEEK_API_KEY
-  valueFrom:
-    secretKeyRef:
-      name: deepseek-secret
-      key: api-key
-
