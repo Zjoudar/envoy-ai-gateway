@@ -1,20 +1,26 @@
 # envoy-ai-gateway
 
-Troubleshooting Tips
-Check Envoy logs:
+#!/bin/bash
 
-bash
-kubectl logs -n ai-gateway -l app=envoy-ai-gateway --tail=50
-Verify secret exists:
+# Build and push Docker image
+docker build -t your-docker-repo/api-gateway:latest .
+docker push your-docker-repo/api-gateway:latest
 
-bash
-kubectl get secret -n ai-gateway deepseek-secret -o yaml
-Test authentication independently:
+# Deploy to Kubernetes
+kubectl create namespace gateway-system
+kubectl apply -f deployment.yaml
 
-bash
-curl -X POST https://api.deepseek.com/v1/chat/completions \
-  -H "Authorization: Bearer $DEEPSEEK_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"Hello"}]}'
-This setup gives you a complete, secure implementation with proper VSCode integration and production-grade authentication handling.
+# Set up TLS (assuming cert-manager is installed)
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
+kubectl apply -f tls-issuer.yaml
+
+# Install observability stack
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install prometheus prometheus-community/kube-prometheus-stack -n monitoring
+
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+helm install jaeger jaegertracing/jaeger -n monitoring
+
+# Verify deployment
+kubectl get all -n gateway-system
 
